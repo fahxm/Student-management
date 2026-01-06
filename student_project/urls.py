@@ -14,7 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from src.Lib.site-packages.pip._vendor.distro.distro import name
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -29,7 +29,7 @@ def home(request):
     return redirect('login')
 
 urlpatterns = [
-    path('',home,name='home')
+    path('',home,name='home'),
     path('admin/', admin.site.urls),
     path('add/',add_student,name='add_student'),
  
