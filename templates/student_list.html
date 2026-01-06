@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Student List{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">📚 Student Directory</h2>
+
+  <!-- Filter & Search Row -->
+  <form method="get" class="row g-2 mb-4 justify-content-center">
+    <div class="col-md-4">
+      <select name="classroom" id="classroom" class="form-select shadow-sm">
+        <option value="">-- All Classrooms --</option>
+        {% for class in classrooms %}
+          <option value="{{ class.id }}" {% if selected_classroom == class.id|stringformat:"s" %}selected{% endif %}>
+            {{ class.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary w-100 shadow-sm">Filter</button>
+    </div>
+  </form>
+
+  <!-- Student Cards -->
+  <div class="row">
+    {% for student in students %}
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-lg border-0 h-100 rounded-3 hover-card">
+          <div class="card-body text-center">
+            <div class="student-avatar bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center">
+              {{ student.name|first|upper }}
+            </div>
+            <h5 class="card-title text-dark fw-bold">{{ student.name }}</h5>
+            <p class="text-muted mb-2">🏫 {{ student.classroom.name }}</p>
+          </div>
+          <div class="card-footer bg-light d-flex justify-content-around">
+            <a href="{% url 'student_detail' student.pk %}" class="btn btn-sm btn-outline-info">🔍 View</a>
+            <a href="{% url 'update_student' student.pk %}" class="btn btn-sm btn-outline-warning">✏ Edit</a>
+            <a href="{% url 'delete_student' student.pk %}" class="btn btn-sm btn-outline-danger">🗑 Delete</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="alert alert-info text-center shadow-sm">
+          No students found.
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Extra Styling -->
+<style>
+  .student-avatar {
+    width: 70px;
+    height: 70px;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .hover-card:hover {
+    transform: translateY(-5px);
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  }
+</style>
+{% endblock %}

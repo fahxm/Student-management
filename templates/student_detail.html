@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Detail{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-primary text-white">
+      <h3 class="mb-0">{{ student.name }}</h3>
+    </div>
+    <div class="card-body">
+      <p><strong>📞 Phone:</strong> {{ student.phone }}</p>
+      <p><strong>✉ Email:</strong> {{ student.email }}</p>
+      <p><strong>🏠 Address:</strong> {{ student.address }}</p>
+      <p><strong>🏫 Classroom:</strong> {{ student.classroom.name }}</p>
+
+      <!-- Guardians -->
+      <h5 class="mt-4">👨‍👩‍👧 Guardians:</h5>
+      <ul class="list-group">
+        {% for guardian in student.guardians.all %}
+          <li class="list-group-item">
+            {{ guardian.name }} ({{ guardian.relation }}) - {{ guardian.phone }}
+          </li>
+        {% empty %}
+          <li class="list-group-item text-muted">No guardians available.</li>
+        {% endfor %}
+      </ul>
+      <a href="{% url 'add_guardian' student.pk %}" class="btn btn-outline-success btn-sm mt-2">+ Add Guardian</a>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+      <a href="{% url 'student_list' %}" class="btn btn-secondary">⬅ Back to List</a>
+      <div>
+        <a href="{% url 'update_student' student.pk %}" class="btn btn-warning">✏ Edit</a>
+        <a href="{% url 'delete_student' student.pk %}" class="btn btn-danger">🗑 Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
