@@ -14,16 +14,22 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from src.Lib.site-packages.pip._vendor.distro.distro import name
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path
+from django.shortcuts import redirect
+
 
 from student_project.settings import MEDIA_ROOT
 from students.views import add_guardian, add_student, student_list, student_update, student_delete, register,student_detail
+def home(request):
+    return redirect('login')
 
 urlpatterns = [
+    path('',home,name='home')
     path('admin/', admin.site.urls),
     path('add/',add_student,name='add_student'),
  
